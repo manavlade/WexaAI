@@ -1,11 +1,8 @@
 import mongoose from "mongoose";
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
     {
-        fullName: {
-            type: String,
-            required: true
-        },
         email: {
             type: String,
             required: true,
@@ -14,10 +11,14 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
-            unique: true
+        },
+        organizationId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Organization",
+            required: true
         }
     },
-    { timestamps: true } 
+    { timestamps: true }
 );
 
 export const User = mongoose.model('User', userSchema);

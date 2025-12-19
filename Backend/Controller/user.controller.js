@@ -2,17 +2,18 @@
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
+import { Organization } from "../models/organization.model.js";
 
 export const register = async (req, res) => {
     try {
-        const { fullName, email, password } = req.body;
+        const { organizationName, email, password } = req.body;
 
-        if (!fullName || !email || !password) {
+        if (!organizationName || !email || !password) {
             return res.status(400).json({
-                message: "Insuffient data",
+                message: "Insufficient data",
                 success: false,
             });
-        };
+        }
 
         let user = await User.findOne({ email });
 
@@ -25,12 +26,16 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        const organization = await Organization.create({
+            name: organizationName,
+            defaultLowStockThreshold: 5,
+        });
+
 
         await User.create({
-            fullName,
             email,
             password: hashedPassword,
-
+            organizationId: organization._id,
         })
 
         return res.status(200).json({
@@ -79,6 +84,7 @@ export const login = async (req, res) => {
 
         const tokenData = {
             userId: user._id,
+            organizationId: user.organizationId,
         }
 
         //➡️ This creates a payload for the JWT (JSON Web Token).
@@ -90,10 +96,13 @@ export const login = async (req, res) => {
             expiresIn: "1d",
         });
 
-        user = {
+        const organization = await Organization.findById(user.organizationId);
+
+        const responseUser = {
             id: user._id,
-            fullName: user.fullName,
             email: user.email,
+            organizationId: user.organizationId,
+            organizationName: organization.name,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
         }
@@ -103,9 +112,9 @@ export const login = async (req, res) => {
             httpOnly: true,
             sameSite: "strict",
         }).json({
-            message: `Welcome back ${user.fullName}`,
+            message: `Welcome back`,
             success: true,
-            user,
+            user: responseUser,
         })
 
     } catch (error) {
