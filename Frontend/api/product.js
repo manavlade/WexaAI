@@ -2,7 +2,6 @@ import axios from "axios";
 
 export const BASE_URL = "http://localhost:8000/api/v1";
 
-// Get all products
 export const getProducts = async () => {
   const res = await axios.get(`${BASE_URL}/product/getAllProducts`, {
     withCredentials: true,
@@ -10,7 +9,6 @@ export const getProducts = async () => {
   return res.data;
 };
 
-// Create product
 export const createProduct = async (productData) => {
 
   const res = await axios.post(
@@ -19,5 +17,21 @@ export const createProduct = async (productData) => {
     
     { withCredentials: true }
   );
+  return res.data;
+};
+
+
+
+export const updateProduct = async (id, data) => {
+  const res = await axios.put(`${BASE_URL}/product/${id}`, data, {
+    withCredentials: true,
+  });
+  return res.data;
+};
+
+export const deleteProduct = async (id) => {
+  const res = await axios.delete(`${BASE_URL}/product/${id}`, {
+    withCredentials: true,
+  });
   return res.data;
 };
