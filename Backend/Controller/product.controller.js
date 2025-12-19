@@ -51,17 +51,18 @@ export const createProduct = async (req, res) => {
     }
 };
 
-
 export const getProducts = async (req, res) => {
     try {
         const orgId = req.user.organizationId;
 
         const products = await Product.find({
-            organizationId: orgId,
-            deleted: false
+            organizationId: orgId
         }).select("name sku quantity lowStockThreshold sellingPrice");
 
-        return res.status(200).json({ success: true, products });
+        return res.status(200).json({
+            success: true,
+            products
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({
@@ -70,6 +71,7 @@ export const getProducts = async (req, res) => {
         });
     }
 };
+
 
 
 export const updateProduct = async (req, res) => {
@@ -82,7 +84,7 @@ export const updateProduct = async (req, res) => {
         delete updateData._id;
 
         const updatedProduct = await Product.findOneAndUpdate(
-            { _id: productId, organizationId: orgId, deleted: false },
+            { _id: productId, organizationId: orgId},
             updateData,
             { new: true, runValidators: true }
         );
@@ -116,31 +118,31 @@ export const updateProduct = async (req, res) => {
 
 
 export const deleteProduct = async (req, res) => {
-  try {
-    const orgId = req.user.organizationId;
-    const productId = req.params.id;
+    try {
+        const orgId = req.user.organizationId;
+        const productId = req.params.id;
 
-    const deleted = await Product.findOneAndDelete({
-      _id: productId,
-      organizationId: orgId
-    });
+        const deleted = await Product.findOneAndDelete({
+            _id: productId,
+            organizationId: orgId
+        });
 
-    if (!deleted) {
-      return res.status(404).json({
-        message: "Product not found or you don't have permission",
-        success: false
-      });
+        if (!deleted) {
+            return res.status(404).json({
+                message: "Product not found or you don't have permission",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "Product deleted successfully",
+            success: true
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-
-    return res.status(200).json({
-      message: "Product deleted successfully",
-      success: true
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      message: "Internal server error",
-      success: false
-    });
-  }
 };
