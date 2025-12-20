@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { LoginUser } from "../../api/login";
 import { Mail, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button"; // shadcn/ui button
-import { Input } from "@/components/ui/input";   // shadcn/ui input
+import { Button } from "@/components/ui/button"; 
+import { Input } from "@/components/ui/input";   
 import { Label } from "@radix-ui/react-label";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ function Login() {
       const data = await LoginUser(email, password);
       setUser(data.user);
       alert(data.message);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
