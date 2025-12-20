@@ -57,7 +57,7 @@ export const getProducts = async (req, res) => {
 
         const products = await Product.find({
             organizationId: orgId
-        }).select("name sku quantity lowStockThreshold sellingPrice");
+        }).select("name sku quantity lowStockThreshold costPrice sellingPrice");
 
         return res.status(200).json({
             success: true,
