@@ -27,10 +27,9 @@ WexaAI/
 - **Framework**: [React](https://react.dev/) with [Vite](https://vitejs.dev/)
 - **Language**: JavaScript (ES Modules)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) with `tailwindcss-animate` and `tailwind-merge`
-- **UI Components**: [Radix UI](https://www.radix-ui.com/) (primitives for accessible components)
+- **UI Components**: [ShadCN UI](https://ui.shadcn.com/) (primitives for accessible components)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Routing**: [React Router DOM](https://reactrouter.com/)
-- **State/Forms**: `react-hook-form` with `zod` validation
 - **HTTP Client**: Axios
 - **Utilities**: `date-fns`, `clsx`, `sonner` (toasts)
 
@@ -63,7 +62,7 @@ npm install
 Create a `.env` file in the `Backend` directory with the following variables (adjust as needed):
 
 ```env
-PORT=3000
+PORT=8000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 ```
