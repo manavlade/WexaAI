@@ -32,8 +32,21 @@ app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/settings", settingsRoutes);
 
-app.listen(PORT, () => {
-    connectDB();
-    console.log(`Server running on port ${PORT}`);
+app.get("/", (req, res) => {
+    res.send("Hello World!");
 });
+
+// app.listen(PORT, () => {
+//     connectDB();
+//     console.log(`Server running on port ${PORT}`);
+// });
+
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}).catch((error) => {
+    console.log(error);
+})
+
 

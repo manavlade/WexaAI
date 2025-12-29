@@ -64,7 +64,7 @@ Create a `.env` file in the `Backend` directory with the following variables (ad
 ```env
 PORT=8000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
+JWT_SECRET=your_jwt_secret_key 
 ```
 
 **Start the Server:**
