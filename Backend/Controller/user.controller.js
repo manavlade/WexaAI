@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import { Organization } from "../models/organization.model.js";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const register = async (req, res) => {
     try {
         const { organizationName, email, password } = req.body;
@@ -110,7 +112,8 @@ export const login = async (req, res) => {
         return res.status(200).cookie("token", token, {
             maxAge: 1 * 24 * 60 * 60 * 1000,
             httpOnly: true,
-            sameSite: "strict",
+            secure: isProd,
+            sameSite: isProd ? "none" : "lax",
         }).json({
             message: `Welcome back`,
             success: true,
