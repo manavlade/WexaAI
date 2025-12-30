@@ -4,7 +4,7 @@ import { Mail, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button"; // shadcn/ui button
 import { Input } from "@/components/ui/input";   // shadcn/ui input
 import { Label } from "@radix-ui/react-label";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -119,6 +119,7 @@ function SignUp() {
       >
         SignUp
       </Button>
+        <p>Already have an account? <Link to="/login">Login</Link></p>
     </form>
   );
 }
